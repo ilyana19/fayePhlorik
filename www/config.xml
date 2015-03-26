@@ -6,10 +6,10 @@
         id        = "ca.lindalou.faye-phloriks-room"
         version   = "1.0.0">
 
-    <name>Faye Phlorik's Room</name>
+    <name>Faye Phlorik's Room 1.0.0</name>
 
     <description>
-        Faye Phlorik is a character created by justMANGO.
+        Faye Phlorik is a character created by justMANGO. This is still in alpha stage.
     </description>
 
     <author href="http://lindalou.ca" email="contact@lindalou.ca">
