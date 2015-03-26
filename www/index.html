@@ -76,7 +76,7 @@ frame.on("ready", function() {
 	}); // end of resizing
 	
 	// put orientation change code in here
-	frame.on("orientation", orientate);
+	/*frame.on("orientation", orientate);
 	
 	function orientate(e) {
 		zog(frame.orientation);
@@ -88,7 +88,9 @@ frame.on("ready", function() {
 		stage.update();
 	}; // end of orientation
 	
-	orientate();
+	orientate();*/
+	
+	stage.addChild(vpages);
 	stage.update();	
 	
 }); // end of ready
