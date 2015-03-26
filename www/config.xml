@@ -3,13 +3,13 @@
 <!-- config.xml reference: https://build.phonegap.com/docs/config-xml -->
 <widget xmlns     = "http://www.w3.org/ns/widgets"
         xmlns:gap = "http://phonegap.com/ns/1.0"
-        id        = "ca.lindalou.faye-phlorik"
-        version   = "1.0.1">
+        id        = "ca.lindalou.faye-phloriks-room"
+        version   = "1.0.0">
 
-    <name>Faye Phlorik</name>
+    <name>Faye Phlorik's Room</name>
 
     <description>
-        Faye Phlorik is a character created by justMANGO. Testing mobile app.
+        Faye Phlorik is a character created by justMANGO.
     </description>
 
     <author href="http://lindalou.ca" email="contact@lindalou.ca">

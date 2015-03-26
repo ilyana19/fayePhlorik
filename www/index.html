@@ -1,19 +1,101 @@
 <!doctype html>
-
 <html>
 <head>
-<meta charset="utf-8">
-<title>Faye Phlorik</title>
+<meta charset="utf-8" />
+<title>Faye Phlorik's Room</title> 
 
-<script src="js/createjs-2014.12.12.min.js"></script>
-<script src="js/zim_1.4_min.js"></script>
+<!-- for CreateJS and ZIMjs http://zimjs.com - free to modify - Dan Zen 2015 -->
+<!-- see http://zimjs.com/templates for more templates and meta tags -->
+
+<script>var zon = true; // true for comments from zim code</script>
+<!--<script src="http://d309knd7es5f10.cloudfront.net/zim_1.4.js"></script>
+<script src="http://code.createjs.com/createjs-2014.12.12.min.js"></script>-->
+<script src="js/libs/zim_1.4_min.js"></script>
+<script src="js/libs/createjs-2014.12.12.min.js"></script>
+<!-- or can go to zimjs.com and createjs.com for individual modules -->
+
+<script src="js/view.js"></script>
+<script src="js/controller.js"></script>
+
+<style>
+	body {margin:0px; padding:0px; background-color:#000;}
+	#myCanvas {position:absolute; background-color:#D1A170;}
+</style>
 
 <script>
-	zog("hi from app");
+
+// SCALING OPTIONS
+// "none"		sets canvas and stage to dimensions and does not scale if window changes
+// "fit"		sets canvas and stage to dimensions and scales to fit inside window size
+// "outside"	sets canvas and stage to dimensions and scales to fit outside window size
+// "full"		sets canvas and stage to window size (canvas is actually set to screen size)
+
+var scaling = "full"; // full automatically sets width and height to window size
+var width = null;
+var height = null;
+var frame = new zim.Frame(scaling, width, height); 
+
+var stage, stageW, stageH;
+
+frame.on("ready", function() {	
+	zog("ready from ZIM Frame");
+	
+	stage = frame.stage;
+	stageW = frame.stageW;
+	stageH = frame.stageH;
+	
+	var gridManager = new zim.GridManager();
+	var guideManager = new zim.GuideManager();
+	
+	//vertical pages
+	var vLayoutManager = new zim.LayoutManager();
+	var vp = app.makeVerticalPages(vLayoutManager, gridManager, guideManager);
+	
+	var vpages = new zim.Pages(
+		stage,[
+			{page: vp.main, swipe: [vp.status, vp.status, null, null]},
+			{page: vp.status, swipe: [vp.main, vp.main, null, null]}
+		], "slide", 400
+	);
+	
+	//prepare hotspots
+	var buttons = app.makeHotSpots(vp, vpages);
+
+	// put resizing code in here (scaling="full" only)
+	frame.on("resize", function(e) {
+		stageW = frame.stageW;
+		stageH = frame.stageH;
+		
+		//custom scaling
+		vLayoutManager.resize();
+		gridManager.resize();
+		guideManager.resize();
+		zim.scaleTo(vp.status, stage, 100, 100, "both");
+		
+		stage.update();
+	}); // end of resizing
+	
+	// put orientation change code in here
+	frame.on("orientation", orientate);
+	
+	function orientate(e) {
+		zog(frame.orientation);
+
+		stage.addChild(vpages);
+		vpages.enable();
+		vLayoutManager.enable();
+		
+		stage.update();
+	}; // end of orientation
+	
+	orientate();
+	stage.update();	
+	
+}); // end of ready
 </script>
 </head>
 
 <body>
-Hello World. It's an update =D
+<!-- canvas with id="myCanvas" is made by zim Frame -->
 </body>
 </html>
