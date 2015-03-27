@@ -12,10 +12,12 @@ var app = function(app) {
 		
 		function train() {
 			zog("train faye");
+			assets.training.setFill("black");
 		}
 		
 		function reset() {
 			zog("reset game");
+			assets.resetButton.setFill("black");
 			window.localStorage.time = Date.now();
 		}
 	}
@@ -37,7 +39,7 @@ var app = function(app) {
 		
 		//zim.drag(assets.buttons);
 		
-		zim.drag(assets.buttons, null, null, null, null, true);
+		//zim.drag(assets.buttons, null, null, null, null, true);
 	}
 	
 	app.statDepletion = function(assets, pages) {
