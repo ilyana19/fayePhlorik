@@ -5,12 +5,18 @@ var app = function(app) {
 		zog("hotspots");
 		
 		var buttons = new zim.HotSpots([
-				{page: assets.main, rect: assets.training, call: train}
+				{page: assets.main, rect: assets.training, call: train},
+				{page: assets.status, rect: assets.resetButton, call: reset}
 			]
 		);
 		
 		function train() {
 			zog("train faye");
+		}
+		
+		function reset() {
+			zog("reset game");
+			window.localStorage.time = Date.now();
 		}
 	}
 	
@@ -39,7 +45,7 @@ var app = function(app) {
 		
 		var decreaseHP = new zim.Proportion(0, 5, 0, 1, -1);
 		var decreaseFood = new zim.Proportion(0, 120, 0, 1, -1);
-		var decreaseWater = new zim.Proportion(0, 5, 0, 1, -1);
+		var decreaseWater = new zim.Proportion(0, 120, 0, 1, -1);
 		var increaseFriendliness = new zim.Proportion(0, 180, 0, 1);
 		
 		var interval = setInterval(function() {
@@ -47,7 +53,7 @@ var app = function(app) {
 			assets.waterStat.scaleX = decreaseWater.convert((Date.now()-window.localStorage.time)/1000/60);
 			assets.friendliness.scaleX = increaseFriendliness.convert((Date.now()-window.localStorage.time)/1000/60);
 			
-			if (assets.hungerStat.scaleX || assets.waterStat.scaleX == 0) {
+			if (assets.hungerStat.scaleX == 0 || assets.waterStat.scaleX == 0) {
 				zog("faye's hungry and thirsty. he's dying.");
 				assets.hp.scaleX = decreaseHP.convert((Date.now()-window.localStorage.time)/1000/60);
 			}
@@ -55,6 +61,7 @@ var app = function(app) {
 			if (assets.hp.scaleX == 0) {
 				zog("dead");
 				clearInterval(interval);
+				
 			}
 			
 			stage.update();

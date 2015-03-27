@@ -81,7 +81,7 @@ var app = function(app) {
 		var statBar = 4, barBacking;
 		
 		for (var i = 0; i < statBar; i++) {
-			barBacking = new zim.Rectangle(w, h, "gray");
+			barBacking = new zim.Rectangle(w, h, "#eee");
 			barBacking.x = 0;
 			barBacking.y = i * (h + gap);
 			barContainer.addChild(barBacking);
@@ -111,6 +111,24 @@ var app = function(app) {
 		friendliness.x = 0;
 		friendliness.y = (h + gap) * 3;
 		stats.addChild(friendliness);
+		
+		//reset button stuff
+		var resetContainer = new createjs.Container();
+		resetContainer.setBounds(0, 0, 400, 200);
+		stats.addChild(resetContainer);
+		
+		var resetButton = p.resetButton = new zim.Rectangle(400, 200, "#eee", null, null, 10);
+		resetButton.x = 100;
+		resetButton.y = stageH/2+100;
+		resetContainer.addChild(resetButton);
+		
+		var resetText = new createjs.Text("RESET", "60px Verdana", "red");
+		resetText.textAlign = "center";
+		resetText.textBaseline = "alphabetic";
+		resetText.x = resetButton.x+200;
+		resetText.y = resetButton.y+120;
+		resetContainer.addChild(resetText);
+		//resetText.alpha = 0;
 		
 		var statusParts = [
 			{object: stats, marginTop: 20, maxWidth: 90, valign: "middle"}
