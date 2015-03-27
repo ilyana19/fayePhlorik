@@ -44,7 +44,7 @@ frame.on("ready", function() {
 		timeDifference = Date.now() - window.localStorage.time;
 		zog(timeDifference/1000);
 	}
-	window.localStorage.time = Date.now();
+	//window.localStorage.time = Date.now(); //testing locally only, remove for actual app
 	
 	stage = frame.stage;
 	stageW = frame.stageW;
