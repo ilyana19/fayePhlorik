@@ -78,7 +78,7 @@ var app = function(app) {
 		//create stat bars
 		var barContainer = new createjs.Container();
 		var w = stats.getBounds().width, h = 60, gap = 30;
-		var statBar = 5, barBacking;
+		var statBar = 4, barBacking;
 		
 		for (var i = 0; i < statBar; i++) {
 			barBacking = new zim.Rectangle(w, h, "gray");
