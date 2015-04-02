@@ -2,6 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width">
 <title>Faye Phlorik's Room</title> 
 
 <!-- for CreateJS and ZIMjs http://zimjs.com - free to modify - Dan Zen 2015 -->
@@ -10,13 +11,25 @@
 <script>var zon = true; // true for comments from zim code</script>
 <script src="js/libs/zim_1.4_min.js"></script>
 <script src="js/libs/createjs-2014.12.12.min.js"></script>
+<script src="js/libs/peach_1.2.js"></script>
+<!-- or can go to zimjs.com and createjs.com for individual modules -->
 
 <script src="js/view.js"></script>
-<script src="js/controller.js"></script>
+<script src="js/controller3.js"></script>
 
 <style>
 	body {margin:0px; padding:0px; background-color:#000;}
 	#myCanvas {position:absolute; background-color:#D1A170;}
+	
+	@font-face {
+		font-family: "AveriaLibre";
+		src: url("fonts/AveriaLibre-Light.ttf");
+	}
+	
+	@font-face {
+		font-family: "Raleway";
+		src: url("fonts/Raleway-Medium.ttf");
+	}
 </style>
 
 <script>
@@ -33,59 +46,84 @@ var height = null;
 var frame = new zim.Frame(scaling, width, height); 
 
 var stage, stageW, stageH;
+var preload;
+
+var animate = window.requestAnimFrame = function(){
+    return (
+        window.requestAnimationFrame       || 
+        window.webkitRequestAnimationFrame || 
+        window.mozRequestAnimationFrame    || 
+        window.oRequestAnimationFrame      || 
+        window.msRequestAnimationFrame     || 
+        function(callback){
+            window.setTimeout(callback, 1000 / 60);
+        }
+    );
+}();
 
 frame.on("ready", function() {	
 	zog("ready from ZIM Frame");
-
-	var timeDifference;
-	if (!window.localStorage.time) {
-		window.localStorage.time = Date.now();
-	} else {
-		timeDifference = Date.now() - window.localStorage.time;
-		zog(timeDifference/1000);
-	}
-	//window.localStorage.time = Date.now(); //testing locally only, remove for actual app
+	var contentPath = "images/";
+	var manifest = [
+		{src: "fayeFront.png", id: "faye"},
+		{src: "turkey7.png", id: "food"},
+		{src: "fonts/AveriaLibre-Light.ttf", id: "averiaLibreLight"}
+	];
 	
-	stage = frame.stage;
-	stageW = frame.stageW;
-	stageH = frame.stageH;
+	preload = new createjs.LoadQueue(true, contentPath); // use true if on the same server
+	preload.on("complete", fayePhlorikRoom);	 // call the main code when ready	
+	preload.loadManifest(manifest);
 	
-	var gridManager = new zim.GridManager();
-	var guideManager = new zim.GuideManager();
-	
-	//vertical pages
-	var vLayoutManager = new zim.LayoutManager();
-	var vp = app.makeVerticalPages(vLayoutManager, gridManager, guideManager);
-	
-	var vpages = new zim.Pages(
-		stage,[
-			{page: vp.status, swipe: [vp.main, vp.main, null, null]},
-			{page: vp.main, swipe: [vp.status, vp.status, null, null]}
-		], "slide", 400
-	);
-	
-	//prepare hotspots/buttons
-	var draggableButtons = app.makeDrag(vp, vpages);
-	var trainingButton = app.makeHotSpots(vp, vpages);
-	var handleStats = app.statDepletion(vp, vpages);
-
-	// put resizing code in here (scaling="full" only)
-	frame.on("resize", function(e) {
+	function fayePhlorikRoom() {
+		
+		if (!window.localStorage.hp) window.localStorage.hp = Date.now();
+		if (!window.localStorage.food) window.localStorage.food = Date.now();
+		if (!window.localStorage.water) window.localStorage.water = Date.now();
+		if (!window.localStorage.friendliness) window.localStorage.friendliness = 0;
+		if (!window.localStorage.randTime) window.localStorage.randTime = 0;
+		
+		stage = frame.stage;
 		stageW = frame.stageW;
 		stageH = frame.stageH;
 		
-		//custom scaling
-		vLayoutManager.resize();
-		vpages.resize();
-		gridManager.resize();
-		guideManager.resize();
-		//zim.scaleTo(vp.status, stage, 100, 100, "both");
+		var gridManager = new zim.GridManager();
+		var guideManager = new zim.GuideManager();
 		
-		stage.update();
-	}); // end of resizing
-	
-	stage.addChild(vpages);
-	stage.update();	
+		//vertical pages
+		var vLayoutManager = new zim.LayoutManager();
+		var vp = app.makeVerticalPages(vLayoutManager, gridManager, guideManager);
+		
+		var vpages = new zim.Pages(
+			stage,[
+				{page: vp.home, swipe: [null, null, null, null]},
+				{page: vp.main, swipe: [vp.status, vp.status, null, null]},
+				{page: vp.status, swipe: [vp.main, vp.main, null, null]},
+				{page: vp.explore, swipe: [null, null, null, null]}
+			], "slide", 400
+		);
+		
+		//prepare hotspots/buttons
+		var draggableButtons = app.makeDrag(vp, vpages);
+		var trainingButton = app.makeHotSpots(vp, vpages);
+		var handleStatsDecrease = app.statDepletion(vp, vpages);
+		
+		// put resizing code in here (scaling="full" only)
+		frame.on("resize", function(e) {
+			stageW = frame.stageW;
+			stageH = frame.stageH;
+			
+			//custom scaling
+			vLayoutManager.resize();
+			vpages.resize();
+			gridManager.resize();
+			guideManager.resize();
+			
+			stage.update();
+		}); // end of resizing
+		
+		stage.addChild(vpages);
+		stage.update();	
+	}
 	
 }); // end of ready
 </script>

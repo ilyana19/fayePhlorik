@@ -4,9 +4,9 @@
 <widget xmlns     = "http://www.w3.org/ns/widgets"
         xmlns:gap = "http://phonegap.com/ns/1.0"
         id        = "ca.lindalou.faye-phloriks-room"
-        version   = "1.0.7">
+        version   = "1.1.0">
 
-    <name>Faye Phlorik's Room 1.0.7</name>
+    <name>Faye Phlorik's Room 1.1.0</name>
 
     <description>
         Faye Phlorik is a character created by justMANGO. This is still in alpha stage.
