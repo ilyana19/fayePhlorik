@@ -6,27 +6,9 @@ var app = function(app) {
 		
 		var buttons = new zim.HotSpots([
 				{page: assets.home, rect: assets.start, call: function() {pages.go(assets.main, "right");}},
-				{page: assets.main, rect: assets.food, call: giveFood},
-				{page: assets.main, rect: assets.water, call: giveWater},
 				{page: assets.main, rect: assets.training, call: function() {pages.go(assets.explore, "right"); train();}}
 			]
 		);
-		
-		function giveFood() {
-			zog("give food to faye");
-			
-			window.localStorage.food = Number(window.localStorage.food) + 2000;
-			window.localStorage.friendliness = Number(window.localStorage.friendliness) + 1;
-			stage.update();
-		}
-		
-		function giveWater() {
-			zog("give water to faye");
-			
-			window.localStorage.water = Number(window.localStorage.water) + 2000;
-			window.localStorage.friendliness = Number(window.localStorage.friendliness) + 1;
-			stage.update();
-		}
 		
 		function train() {
 			zog("train faye");
@@ -59,50 +41,31 @@ var app = function(app) {
 	}
 	
 	app.makeDrag = function(assets, pages) {
-		zog("dragging");
-		zim.drag(assets.buttons, null, null, null, null, false);
-		
-		/*assets.buttons.on("mousedown", function(e) {
-			assets.buttonBox.addChild(assets.buttons);
-			assets.copy = e.target.clone();
-			zog(assets.copy);
-			assets.copy.startX = e.target.startX; // clones do not get custom properties
-			assets.copy.startY = e.target.startY;
-			assets.buttons.addChildAt(assets.copy, 0);
-			assets.buttons.addChild(e.target); // put above other parts in tray
-		});*/
-		
+		zim.drag(assets.buttons);
 		assets.buttons.on("pressup", action);
 		
 		function action(e) {
-			zog("dragging");
 			var obj = e.target;
+			var newX, newY;
 			
 			if (zim.hitTestReg(assets.chara, obj)) {
-				if (!assets.hitCheck) {
-					assets.hitCheck = true;
-					assets.chara.addChild(obj);
-					assets.chara.removeChild(obj);
-					obj = null;
-					zog("change stats");
-				}
-			} else {
-				if (assets.hitCheck) {
-					var point = obj.parent.localToLocal(obj.x, obj.y, assets.buttons);
-					obj.x = point.x;
-					obj.y = point.y;
-					assets.buttons.addChild(obj);
-					zim.move(obj, obj.startX, obj.startY, 200, null, function() {
-						assets.buttons.removeChild(obj);
-						obj = null;
-					});
-					assets.hitCheck = false;
-					zog("nope");
-					
-				}
+				if (obj.name === "food") giveFood();
+				else giveWater();
+			} 
+			zim.move(obj, obj.startX, obj.startY, 200);
+			
+			function giveFood() {
+				window.localStorage.food = Number(window.localStorage.food) + 2000;
+				window.localStorage.friendliness = Number(window.localStorage.friendliness) + 1;
+				stage.update();
 			}
 			
-			//zog(assets.hitCheck);
+			function giveWater() {
+				window.localStorage.water = Number(window.localStorage.water) + 2000;
+				window.localStorage.friendliness = Number(window.localStorage.friendliness) + 1;
+				stage.update();
+			}
+			
 			stage.update();
 		}
 	}
@@ -128,16 +91,12 @@ var app = function(app) {
 					assets.hp.scaleX = decreaseHP.convert((Date.now()-window.localStorage.hp)/1000);
 				}
 				stage.update();
-				
-				
 				assets.resetButton.on('click', reset, false);
 				
 			} else {
-				//zog("dead");
 				assets.resetButton.on('click', reset, false);
 			}
 		}
-		
 		
 		function recursively() {
 			handleStats();

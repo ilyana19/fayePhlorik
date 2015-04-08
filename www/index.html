@@ -9,13 +9,13 @@
 <!-- see http://zimjs.com/templates for more templates and meta tags -->
 
 <script>var zon = true; // true for comments from zim code</script>
-<script src="js/libs/zim_1.4_min.js"></script>
+<script src="js/libs/zim_1.4.2_min.js"></script>
 <script src="js/libs/createjs-2014.12.12.min.js"></script>
 <script src="js/libs/peach_1.2.js"></script>
 <!-- or can go to zimjs.com and createjs.com for individual modules -->
 
 <script src="js/view.js"></script>
-<script src="js/controller3.js"></script>
+<script src="js/controller4.js"></script>
 
 <style>
 	body {margin:0px; padding:0px; background-color:#000;}
@@ -66,8 +66,11 @@ frame.on("ready", function() {
 	var contentPath = "images/";
 	var manifest = [
 		{src: "fayeFront.png", id: "faye"},
-		{src: "turkey7.png", id: "food"},
-		{src: "fonts/AveriaLibre-Light.ttf", id: "averiaLibreLight"}
+		{src: "heart.png", id: "heart"},
+		{src: "start.png", id: "start"},
+		{src: "food.png", id: "food"},
+		{src: "wine.png", id: "wine"},
+		{src: "dualSwords.png", id: "swords"}
 	];
 	
 	preload = new createjs.LoadQueue(true, contentPath); // use true if on the same server
@@ -75,7 +78,6 @@ frame.on("ready", function() {
 	preload.loadManifest(manifest);
 	
 	function fayePhlorikRoom() {
-		
 		if (!window.localStorage.hp) window.localStorage.hp = Date.now();
 		if (!window.localStorage.food) window.localStorage.food = Date.now();
 		if (!window.localStorage.water) window.localStorage.water = Date.now();

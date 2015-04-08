@@ -12,10 +12,18 @@ var app = function(app) {
 		splash.setBounds(0, 0, 600, 1000);
 		p.home.addChild(splash);
 		
-		var start = p.start = new createjs.Bitmap(preload.getResult("food"));
-		start.x = 100;
-		start.y = 200;
+		var start = p.start = new createjs.Bitmap(preload.getResult("start"));
+		start.x = 180;
+		start.y = 500;
+		start.scaleX = start.scaleY = 0.8;
 		splash.addChild(start);
+		
+		var splashText = p.splashText = new createjs.Text("Faye Phlorik's\nRoom", "80px AveriaLibre", "#D7D6EE");
+		splashText.textAlign = "center";
+		splashText.textBaseline = "alphabetic";
+		splashText.x = 300;
+		splashText.y = 340;
+		splash.addChild(splashText);
 		
 		var homeParts = [
 			{object: splash, marginTop: 0, maxWidth: stageW, backgroundColor: "#5D5D77", valign: "middle"}
@@ -31,11 +39,14 @@ var app = function(app) {
 		p.main = new createjs.Container();
 		p.main.name = "main";
 		
-		var room = new createjs.Container();
+		var room = p.room = new createjs.Container();
 		room.setBounds(0, 0, 600, 1000);
 		room.w = room.getBounds().width;
 		room.h = room.getBounds().height;
 		p.main.addChild(room);
+		
+		var charaStuff = p.charaStuff = new createjs.Container();
+		room.addChild(charaStuff);
 		
 		//var chara = p.chara = new zim.Rectangle(200, 200, "black");
 		//chara.setBounds(0, 0, 200, 200);
@@ -46,7 +57,14 @@ var app = function(app) {
 		chara.h = chara.getBounds().height;
 		chara.regX = chara.w/2;
 		chara.regY = chara.h/2;
-		room.addChild(chara);
+		charaStuff.addChild(chara);
+		
+		var heart = p.heart = new createjs.Bitmap(preload.getResult("heart"));
+		heart.x = chara.x + 150;
+		heart.y = chara.y - 220;
+		heart.rotation = 25;
+		heart.alpha = 0;
+		charaStuff.addChild(heart);
 		
 		//button container for: food, water, train
 		var size = 600, space = 300;
@@ -58,32 +76,38 @@ var app = function(app) {
 		p.main.addChild(buttonBox);
 		
 		buttonBox.buttons = p.buttons = new createjs.Container();
-		buttonBox.buttons.hitCheck = p.hitCheck = false;
-		buttonBox.buttons.copy = p.copy;
-		buttonBox.pressed = p.pressed = false;
 		buttonBox.addChild(buttonBox.buttons);
 		
-		var foodBG = new zim.Rectangle(size, size, "#D7D6EE");
+		var foodBG = new zim.Rectangle(size, size, "#C4DDA4");
 		buttonBox.addChildAt(foodBG, 0);
 		var food = p.food = new createjs.Bitmap(preload.getResult("food"));
-		food.startX = food.x = buttonBox.w-space;
-		food.startY = food.y = space;
+		food.startX = food.x = buttonBox.w-space/2;
+		food.startY = food.y = space+50;
 		food.regX = size/2;
 		food.regY = size/2;
+		food.name = "food";
 		buttonBox.buttons.addChild(food);
 		
-		var water = p.water = new zim.Rectangle(size, size, "#D7D6EE");
+		var waterBG = new zim.Rectangle(size, size, "#A4D5DD");
+		waterBG.x = buttonBox.w;
+		buttonBox.addChildAt(waterBG, 0);
+		var water = p.water = new createjs.Bitmap(preload.getResult("wine"));
 		water.setBounds(0, 0, size, size);
-		water.startX = water.x = buttonBox.w+space;
-		water.startY = water.y = space;
+		water.startX = water.x = buttonBox.w+space+120;
+		water.startY = water.y = space+60;
 		water.regX = size/2;
 		water.regY = size/2;
+		water.name = "water";
 		buttonBox.buttons.addChild(water);
 		
-		var training = p.training = new zim.Rectangle(size, size, "#D7D6EE");
+		var trainingBG = new zim.Rectangle(size, size, "#DDA4A4");
+		trainingBG.x = buttonBox.w*2;
+		buttonBox.addChildAt(trainingBG, 0);
+		var training = p.training = new createjs.Bitmap(preload.getResult("swords"));
 		training.setBounds(0, 0, size, size);
-		training.x = buttonBox.w+(space*3);
-		training.y = space;
+		training.x = buttonBox.w+(space*3)+80;
+		training.y = space+20;
+		training.scaleX = training.scaleY = 0.9;
 		training.regX = size/2;
 		training.regY = size/2;
 		buttonBox.addChild(training);
@@ -225,9 +249,16 @@ var app = function(app) {
 		trainingText.y = 400;
 		content.addChild(trainingText);
 		
-		var trainingIcon =  new zim.Rectangle(200, 200, "#B5ED00");
-		trainingIcon.x = trainingText.x/2+50;
-		trainingIcon.y = trainingText.y+120;
+		var trainingIconBG =  new zim.Rectangle(200, 200, "#ED406E");
+		trainingIconBG.x = trainingText.x/2+50;
+		trainingIconBG.y = trainingText.y+120;
+		content.addChildAt(trainingIconBG, 0);
+		var trainingIcon = new createjs.Bitmap(preload.getResult("swords"));
+		trainingIcon.scaleX = trainingIcon.scaleY = 0.4;
+		//trainingIcon.x = trainingText.x/2+50;
+		//trainingIcon.y = trainingText.y+120;
+		trainingIcon.x = trainingIconBG.x+10;
+		trainingIcon.y = trainingIconBG.y;
 		content.addChild(trainingIcon);
 		
 		var exploreParts = [
