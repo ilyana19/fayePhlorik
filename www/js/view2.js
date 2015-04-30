@@ -52,7 +52,7 @@ var app = function(app) {
 		
 		//var chara = p.chara = new zim.Rectangle(200, 200, "black");
 		//chara.setBounds(0, 0, 200, 200);
-		var chara = p.chara = new createjs.Bitmap(preload.getResult("f1"));
+		var chara = p.chara = new createjs.Bitmap(preload.getResult("fayeFront"));
 		chara.x = room.w/2;
 		chara.y = room.h/2;
 		chara.w = chara.getBounds().width;
