@@ -9,7 +9,7 @@
 <!-- see http://zimjs.com/templates for more templates and meta tags -->
 
 <script>var zon = true; // true for comments from zim code</script>
-<script src="js/libs/zim_1.4.2.js"></script>
+<script src="js/libs/zim_1.4.2_min.js"></script>
 <script src="js/libs/createjs-2014.12.12.min.js"></script>
 <script src="js/libs/peach_1.3.js"></script>
 <!-- or can go to zimjs.com and createjs.com for individual modules -->
@@ -63,16 +63,13 @@ frame.on("ready", function() {
 	zog("ready from ZIM Frame");
 	var contentPath = "images/";
 	var manifest = [
-		{src: "fayeFront.png", id: "faye"},
+		{src: "fayeFront0.png", id: "faye"},
 		{src: "heart.png", id: "heart"},
 		{src: "start.png", id: "start"},
 		{src: "food.png", id: "food"},
 		{src: "wine.png", id: "wine"},
 		{src: "dualSwords.png", id: "swords"},
 		{src: "door.png", id: "door"},
-		{src: "faye/0.png", id: "f0"},
-		{src: "faye/1.png", id: "f1"},
-		{src: "faye/2.png", id: "f2"}
 	];
 	
 	preload = new createjs.LoadQueue(true, contentPath); // use true if on the same server
@@ -102,7 +99,7 @@ frame.on("ready", function() {
 		
 		var vpages = new zim.Pages(
 			stage,[
-				{page: vp.home, swipe: [null, null, null, null]},
+				//{page: vp.home, swipe: [null, null, null, null]},
 				{page: vp.main, swipe: [vp.status, vp.status, null, null]},
 				{page: vp.status, swipe: [vp.main, vp.main, null, null]},
 				{page: vp.explore, swipe: [null, null, null, null]}

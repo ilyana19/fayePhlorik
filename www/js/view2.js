@@ -52,14 +52,14 @@ var app = function(app) {
 		
 		//var chara = p.chara = new zim.Rectangle(200, 200, "black");
 		//chara.setBounds(0, 0, 200, 200);
-		var chara = p.chara = new createjs.Bitmap(preload.getResult("fayeFront"));
+		var chara = p.chara = new createjs.Bitmap(preload.getResult("faye"));
 		chara.x = room.w/2;
 		chara.y = room.h/2;
 		chara.w = chara.getBounds().width;
 		chara.h = chara.getBounds().height;
 		chara.regX = chara.w/2;
 		chara.regY = chara.h/2;
-		chara.scaleX = chara.scaleY = 0.4;
+		//chara.scaleX = chara.scaleY = 0.4;
 		charaStuff.addChild(chara);
 		
 		var heart = p.heart = new createjs.Bitmap(preload.getResult("heart"));
@@ -88,11 +88,11 @@ var app = function(app) {
 		foodBG.y = buttonBox.h/2-510;
 		buttonBox.addChildAt(foodBG, 0);
 		var food = p.food = new createjs.Bitmap(preload.getResult("food"));
-		food.startX = food.x = foodBG.x+550;
-		food.startY = food.y = foodBG.y+520;
-		food.regX = w/2;
-		food.regY = h/2;
-		//food.scaleX = food.scaleY = 1.2;
+		food.startX = food.x = foodBG.x+100;
+		food.startY = food.y = foodBG.y+80;
+		//food.regX = w/2;
+		//food.regY = h/2;
+		food.scaleX = food.scaleY = 2.8;
 		food.name = "food";
 		buttonBox.buttons.addChild(food);
 		
@@ -102,10 +102,11 @@ var app = function(app) {
 		buttonBox.addChildAt(waterBG, 0);
 		var water = p.water = new createjs.Bitmap(preload.getResult("wine"));
 		water.setBounds(0, 0, w, h);
-		water.startX = water.x = waterBG.x+560;
-		water.startY = water.y = waterBG.y+520;
-		water.regX = w/2;
-		water.regY = h/2;
+		water.startX = water.x = waterBG.x+90;
+		water.startY = water.y = waterBG.y+80;
+		//water.regX = w/2;
+		//water.regY = h/2;
+		water.scaleX = water.scaleY = 2.8;
 		water.name = "water";
 		buttonBox.buttons.addChild(water);
 		
