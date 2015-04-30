@@ -4,9 +4,9 @@
 <widget xmlns     = "http://www.w3.org/ns/widgets"
         xmlns:gap = "http://phonegap.com/ns/1.0"
         id        = "ca.lindalou.faye-phlorik"
-        version   = "1.1.1">
+        version   = "1.1.2">
 
-    <name>Faye Phlorik 1.1.1</name>
+    <name>Faye Phlorik</name>
 
     <description>
         Faye Phlorik is a character created by justMANGO. A mobile app assignment at Sheridan.
