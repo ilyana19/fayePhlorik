@@ -92,7 +92,7 @@ var app = function(app) {
 		//food.startY = food.y = foodBG.y+1180;
 		food.x = foodBG.x+1150;
 		food.y = foodBG.y+1180;
-		food.scaleX = food.scaleY = 2.8;
+		food.scaleX = food.scaleY = 2.3;
 		food.regX = w/2;
 		food.regY = h/2;
 		food.name = "food";
@@ -108,7 +108,7 @@ var app = function(app) {
 		//water.startY = water.y = waterBG.y+1180;
 		water.x = waterBG.x+1120;
 		water.y = waterBG.y+1180;
-		water.scaleX = water.scaleY = 2.8;
+		water.scaleX = water.scaleY = 2.3;
 		water.regX = w/2;
 		water.regY = h/2;
 		water.name = "water";
