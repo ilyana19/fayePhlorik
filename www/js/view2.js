@@ -92,7 +92,7 @@ var app = function(app) {
 		food.startY = food.y = foodBG.y+80;
 		//food.regX = w/2;
 		//food.regY = h/2;
-		food.scaleX = food.scaleY = 2.8;
+		//food.scaleX = food.scaleY = 2.8;
 		food.name = "food";
 		buttonBox.buttons.addChild(food);
 		
@@ -106,7 +106,7 @@ var app = function(app) {
 		water.startY = water.y = waterBG.y+80;
 		//water.regX = w/2;
 		//water.regY = h/2;
-		water.scaleX = water.scaleY = 2.8;
+		//water.scaleX = water.scaleY = 2.8;
 		water.name = "water";
 		buttonBox.buttons.addChild(water);
 		
