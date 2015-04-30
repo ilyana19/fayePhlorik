@@ -90,9 +90,9 @@ var app = function(app) {
 		var food = p.food = new createjs.Bitmap(preload.getResult("food"));
 		//food.startX = food.x = foodBG.x+1150;
 		//food.startY = food.y = foodBG.y+1180;
-		food.x = foodBG.x+1150;
-		food.y = foodBG.y+1180;
-		food.scaleX = food.scaleY = 2.3;
+		food.x = foodBG.x+650;
+		food.y = foodBG.y+590;
+		food.scaleX = food.scaleY = 1.3;
 		food.regX = w/2;
 		food.regY = h/2;
 		food.name = "food";
@@ -106,9 +106,9 @@ var app = function(app) {
 		water.setBounds(0, 0, w, h);
 		//water.startX = water.x = waterBG.x+1120;
 		//water.startY = water.y = waterBG.y+1180;
-		water.x = waterBG.x+1120;
-		water.y = waterBG.y+1180;
-		water.scaleX = water.scaleY = 2.3;
+		water.x = waterBG.x+620;
+		water.y = waterBG.y+590;
+		water.scaleX = water.scaleY = 1.3;
 		water.regX = w/2;
 		water.regY = h/2;
 		water.name = "water";
