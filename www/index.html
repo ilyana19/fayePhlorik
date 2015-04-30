@@ -9,12 +9,12 @@
 <!-- see http://zimjs.com/templates for more templates and meta tags -->
 
 <script>var zon = true; // true for comments from zim code</script>
-<script src="js/libs/zim_1.4.2_min.js"></script>
+<script src="js/libs/zim_1.4.2.js"></script>
 <script src="js/libs/createjs-2014.12.12.min.js"></script>
-<script src="js/libs/peach_1.2.js"></script>
+<script src="js/libs/peach_1.3.js"></script>
 <!-- or can go to zimjs.com and createjs.com for individual modules -->
 
-<script src="js/view.js"></script>
+<script src="js/view2.js"></script>
 <script src="js/controller4.js"></script>
 
 <style>
@@ -44,9 +44,7 @@ var scaling = "full"; // full automatically sets width and height to window size
 var width = null;
 var height = null;
 var frame = new zim.Frame(scaling, width, height); 
-
-var stage, stageW, stageH;
-var preload;
+var stage, stageW, stageH, preload, ticker;
 
 var animate = window.requestAnimFrame = function(){
     return (
@@ -70,7 +68,11 @@ frame.on("ready", function() {
 		{src: "start.png", id: "start"},
 		{src: "food.png", id: "food"},
 		{src: "wine.png", id: "wine"},
-		{src: "dualSwords.png", id: "swords"}
+		{src: "dualSwords.png", id: "swords"},
+		{src: "door.png", id: "door"},
+		{src: "faye/0.png", id: "f0"},
+		{src: "faye/1.png", id: "f1"},
+		{src: "faye/2.png", id: "f2"}
 	];
 	
 	preload = new createjs.LoadQueue(true, contentPath); // use true if on the same server
@@ -79,14 +81,17 @@ frame.on("ready", function() {
 	
 	function fayePhlorikRoom() {
 		if (!window.localStorage.hp) window.localStorage.hp = Date.now();
+		if (!window.localStorage.exp) window.localStorage.exp = 0;
 		if (!window.localStorage.food) window.localStorage.food = Date.now();
 		if (!window.localStorage.water) window.localStorage.water = Date.now();
 		if (!window.localStorage.friendliness) window.localStorage.friendliness = 0;
 		if (!window.localStorage.randTime) window.localStorage.randTime = 0;
+		if (!window.localStorage.lvl) window.localStorage.lvl = 1;
 		
 		stage = frame.stage;
 		stageW = frame.stageW;
 		stageH = frame.stageH;
+		ticker = createjs.Ticker.on("tick", stage);
 		
 		var gridManager = new zim.GridManager();
 		var guideManager = new zim.GuideManager();

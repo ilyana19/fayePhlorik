@@ -9,20 +9,22 @@ var app = function(app) {
 		p.home.name = "home";
 		
 		var splash = p.home.splash = new createjs.Container();
-		splash.setBounds(0, 0, 600, 1000);
+		splash.setBounds(0, 0, 768, 1024);
+		splash.w = splash.getBounds().width;
+		splash.h = splash.getBounds().height;
 		p.home.addChild(splash);
 		
 		var start = p.start = new createjs.Bitmap(preload.getResult("start"));
-		start.x = 180;
-		start.y = 500;
+		start.x = splash.w/2-124;
+		start.y = splash.w/2+100;
 		start.scaleX = start.scaleY = 0.8;
 		splash.addChild(start);
 		
 		var splashText = p.splashText = new createjs.Text("Faye Phlorik's\nRoom", "80px AveriaLibre", "#D7D6EE");
 		splashText.textAlign = "center";
 		splashText.textBaseline = "alphabetic";
-		splashText.x = 300;
-		splashText.y = 340;
+		splashText.x = splash.w/2;
+		splashText.y = splash.w/2-50;
 		splash.addChild(splashText);
 		
 		var homeParts = [
@@ -40,7 +42,7 @@ var app = function(app) {
 		p.main.name = "main";
 		
 		var room = p.room = new createjs.Container();
-		room.setBounds(0, 0, 600, 1000);
+		room.setBounds(0, 0, 768, 1024);
 		room.w = room.getBounds().width;
 		room.h = room.getBounds().height;
 		p.main.addChild(room);
@@ -50,16 +52,18 @@ var app = function(app) {
 		
 		//var chara = p.chara = new zim.Rectangle(200, 200, "black");
 		//chara.setBounds(0, 0, 200, 200);
-		var chara = p.chara = new createjs.Bitmap(preload.getResult("faye"));
+		var chara = p.chara = new createjs.Bitmap(preload.getResult("f1"));
 		chara.x = room.w/2;
 		chara.y = room.h/2;
 		chara.w = chara.getBounds().width;
 		chara.h = chara.getBounds().height;
 		chara.regX = chara.w/2;
 		chara.regY = chara.h/2;
+		chara.scaleX = chara.scaleY = 0.4;
 		charaStuff.addChild(chara);
 		
 		var heart = p.heart = new createjs.Bitmap(preload.getResult("heart"));
+		var showHeart = p.showHeart;
 		heart.x = chara.x + 150;
 		heart.y = chara.y - 220;
 		heart.rotation = 25;
@@ -67,49 +71,55 @@ var app = function(app) {
 		charaStuff.addChild(heart);
 		
 		//button container for: food, water, train
-		var size = 600, space = 300;
+		var w = 750, h = 768;
 		
 		var buttonBox = p.buttonBox = new createjs.Container();
-		buttonBox.setBounds(0, 0, 1800, 600);
+		buttonBox.setBounds(0, 0, 1024, 768);
 		buttonBox.w = room.getBounds().width;
 		buttonBox.h = room.getBounds().height;
 		p.main.addChild(buttonBox);
 		
 		buttonBox.buttons = p.buttons = new createjs.Container();
+		buttonBox.buttons.hitCheck = p.hitCheck = false;
 		buttonBox.addChild(buttonBox.buttons);
 		
-		var foodBG = new zim.Rectangle(size, size, "#C4DDA4");
+		var foodBG = new zim.Rectangle(w, h, "#C4DDA4");
+		foodBG.x = buttonBox.w/2-1000;
+		foodBG.y = buttonBox.h/2-510;
 		buttonBox.addChildAt(foodBG, 0);
 		var food = p.food = new createjs.Bitmap(preload.getResult("food"));
-		food.startX = food.x = buttonBox.w-space/2;
-		food.startY = food.y = space+50;
-		food.regX = size/2;
-		food.regY = size/2;
+		food.startX = food.x = foodBG.x+550;
+		food.startY = food.y = foodBG.y+520;
+		food.regX = w/2;
+		food.regY = h/2;
+		//food.scaleX = food.scaleY = 1.2;
 		food.name = "food";
 		buttonBox.buttons.addChild(food);
 		
-		var waterBG = new zim.Rectangle(size, size, "#A4D5DD");
-		waterBG.x = buttonBox.w;
+		var waterBG = new zim.Rectangle(w, h, "#A4D5DD");
+		waterBG.x = buttonBox.w/2-250;
+		waterBG.y = buttonBox.h/2-510;
 		buttonBox.addChildAt(waterBG, 0);
 		var water = p.water = new createjs.Bitmap(preload.getResult("wine"));
-		water.setBounds(0, 0, size, size);
-		water.startX = water.x = buttonBox.w+space+120;
-		water.startY = water.y = space+60;
-		water.regX = size/2;
-		water.regY = size/2;
+		water.setBounds(0, 0, w, h);
+		water.startX = water.x = waterBG.x+560;
+		water.startY = water.y = waterBG.y+520;
+		water.regX = w/2;
+		water.regY = h/2;
 		water.name = "water";
 		buttonBox.buttons.addChild(water);
 		
-		var trainingBG = new zim.Rectangle(size, size, "#DDA4A4");
-		trainingBG.x = buttonBox.w*2;
+		var trainingBG = new zim.Rectangle(w, h, "#DDA4A4");
+		trainingBG.x = buttonBox.w/2+500;
+		trainingBG.y = buttonBox.h/2-510;
 		buttonBox.addChildAt(trainingBG, 0);
-		var training = p.training = new createjs.Bitmap(preload.getResult("swords"));
-		training.setBounds(0, 0, size, size);
-		training.x = buttonBox.w+(space*3)+80;
-		training.y = space+20;
-		training.scaleX = training.scaleY = 0.9;
-		training.regX = size/2;
-		training.regY = size/2;
+		var training = p.training = new createjs.Bitmap(preload.getResult("door"));
+		training.setBounds(0, 0, w, h);
+		training.x = trainingBG.x+1000;
+		training.y = trainingBG.y+1040;
+		training.scaleX = training.scaleY = 2.3;
+		training.regX = w/2;
+		training.regY = h/2;
 		buttonBox.addChild(training);
 		
 		//percentages
@@ -129,99 +139,123 @@ var app = function(app) {
 		p.status.name = "status";
 		
 		var stats = new createjs.Container();
-		stats.setBounds(0, 0, 600, 800);
-		stats.current = p.current = 0;
+		stats.setBounds(0, 0, 768, 1024);
+		stats.w = stats.getBounds().width;
+		stats.h = stats.getBounds().height;
 		p.status.addChild(stats);
 		
-		var statHeader = new createjs.Text("STATUS", "72px AveriaLibre", "#D7D6EE");
+		var statHeader = new createjs.Text("STATUS", "96px AveriaLibre", "#D7D6EE");
 		statHeader.textAlign = "center";
 		statHeader.textBaseline = "alphabetic";
-		statHeader.x = stats.x+300;
-		statHeader.y = stats.y-100;
+		statHeader.x = stats.w/2;
+		statHeader.y = stats.h/2-700;
 		stats.addChild(statHeader);
 		
+		var lvlText = p.lvlText = new createjs.Text("LVL "+window.localStorage.lvl, "60px AveriaLibre", "#D7D6EE");
+		lvlText.textAlign = "center";
+		lvlText.textBaseline = "alphabetic";
+		lvlText.x = stats.w/2-10;
+		lvlText.y = stats.h/2-600;
+		var lvlCheck = p.lvlCheck = false;
+		stats.addChild(lvlText);
+		
 		/* -------------------------------------- */
-		var hp = new createjs.Text("HEALTH", "32px Raleway", "#DDA4A4");
-		hp.textAlign = "left";
-		hp.textBaseline = "alphabetic";
-		hp.x = stats.x;
-		hp.y = stats.y-10;
-		stats.addChild(hp);
+		var health = new createjs.Text("HEALTH", "32px Raleway", "#DDA4A4");
+		health.textAlign = "left";
+		health.textBaseline = "alphabetic";
+		health.x = stats.x;
+		health.y = stats.y-10;
+		stats.addChild(health);
+		
+		var experience = new createjs.Text("EXPERIENCE", "32px Raleway", "#A8A09E");
+		experience.textAlign = "left";
+		experience.textBaseline = "alphabetic";
+		experience.x = stats.x;
+		experience.y = stats.y+150;
+		stats.addChild(experience);
 		
 		var hng = new createjs.Text("FOOD", "32px Raleway", "#C4DDA4");
 		hng.textAlign = "left";
 		hng.textBaseline = "alphabetic";
 		hng.x = stats.x;
-		hng.y = stats.y+130;
+		hng.y = stats.y+310;
 		stats.addChild(hng);
 		
 		var wtr = new createjs.Text("WATER", "32px Raleway", "#A4D5DD");
 		wtr.textAlign = "left";
 		wtr.textBaseline = "alphabetic";
 		wtr.x = stats.x;
-		wtr.y = stats.y+270;
+		wtr.y = stats.y+470;
 		stats.addChild(wtr);
 		
 		var friend = new createjs.Text("FRIENDLINESS", "32px Raleway", "#DDD8A4");
 		friend.textAlign = "left";
 		friend.textBaseline = "alphabetic";
 		friend.x = stats.x;
-		friend.y = stats.y+410;
+		friend.y = stats.y+630;
 		stats.addChild(friend);
 		/* -------------------------------------- */
 		
 		//create stat bars
 		var barContainer = new createjs.Container();
-		var w = stats.getBounds().width, h = 60, gap = 80;
-		var statBar = 4, barBacking;
+		var barW = stats.getBounds().width, barH = 80, gap = 80;
+		var statBar = 5, barBacking;
 		
 		for (var i = 0; i < statBar; i++) {
-			barBacking = new zim.Rectangle(w, h, "#D7D6EE");
+			barBacking = new zim.Rectangle(barW, barH, "#D7D6EE");
 			barBacking.x = 0;
-			barBacking.y = i * (h + gap);
+			barBacking.y = i * (barH + gap);
 			barContainer.addChild(barBacking);
 			stats.addChild(barContainer);
 		}
 		
-		var hp = p.hp =  new zim.Rectangle(w, h, "#ED406E");
+		var hp = p.hp =  new zim.Rectangle(barW, barH, "#ED406E");
 		hp.scaleX = 1;
 		hp.x = 0;
 		hp.y = 0;
-		stats.addChild(hp);		
+		stats.addChild(hp);
+
+		var exp = p.exp =  new zim.Rectangle(barW, barH, "#8C8C8C");
+		exp.scaleX = 0;
+		exp.x = 0;
+		exp.y = barH + gap;
+		stats.addChild(exp);			
 		
-		var hungerStat = p.hungerStat =  new zim.Rectangle(w, h, "#B5ED00");
+		var hungerStat = p.hungerStat =  new zim.Rectangle(barW, barH, "#B5ED00");
 		hungerStat.scaleX = 1;
 		hungerStat.x = 0;
-		hungerStat.y = h + gap;
+		hungerStat.y =(barH + gap) * 2;
 		stats.addChild(hungerStat);
 		
-		var waterStat = p.waterStat =  new zim.Rectangle(w, h, "#00BDED");
+		var waterStat = p.waterStat =  new zim.Rectangle(barW, barH, "#00BDED");
 		waterStat.scaleX = 1;
 		waterStat.x = 0;
-		waterStat.y = (h + gap) * 2;
+		waterStat.y = (barH + gap) * 3;
 		stats.addChild(waterStat);
 		
-		var friendliness = p.friendliness = new zim.Rectangle(w, h, "#EDC500");
+		var friendliness = p.friendliness = new zim.Rectangle(barW, barH, "#EDC500");
 		friendliness.scaleX = 0;
 		friendliness.x = 0;
-		friendliness.y = (h + gap) * 3;
+		friendliness.y = (barH + gap) * 4;
 		stats.addChild(friendliness);
 		
 		//reset button stuff
 		var resetContainer = new createjs.Container();
-		resetContainer.setBounds(0, 0, 400, 200);
+		resetContainer.setBounds(0, 0, 1024, 768);
+		resetContainer.w = stats.getBounds().width;
+		resetContainer.h = stats.getBounds().height;
 		stats.addChild(resetContainer);
 		
-		var resetButton = p.resetButton = new zim.Rectangle(400, 200, "#D7D6EE", null, null, 10);
-		resetButton.x = 100;
-		resetButton.y = 550;
+		var resetButton = p.resetButton = new zim.Rectangle(barW, 150, "#D7D6EE", null, null, 10);
+		resetButton.x = 0;
+		resetButton.y = resetContainer.h/2+340;
 		resetContainer.addChild(resetButton);
 		
 		var resetText = new createjs.Text("RESET", "72px AveriaLibre", "#AA586E");
 		resetText.textAlign = "center";
 		resetText.textBaseline = "alphabetic";
-		resetText.x = resetButton.x+200;
-		resetText.y = resetButton.y+120;
+		resetText.x = resetButton.x+380;
+		resetText.y = resetButton.y+100;
 		resetContainer.addChild(resetText);
 		
 		var statusParts = [
@@ -239,24 +273,24 @@ var app = function(app) {
 		p.explore.name = "explore";
 		
 		var content = p.explore.content = new createjs.Container();
-		content.setBounds(0, 0, 600, 1000);
+		content.setBounds(0, 0, 768, 1024);
+		content.w = content.getBounds().width;
+		content.h = content.getBounds().height;
 		p.explore.addChild(content);
 		
 		var trainingText = p.trainingText = new createjs.Text("TRAINING\nIN PROGRESS", "60px AveriaLibre", "#D7D6EE");
 		trainingText.textAlign = "center";
 		trainingText.textBaseline = "alphabetic";
-		trainingText.x = 300;
-		trainingText.y = 400;
+		trainingText.x = content.w/2;
+		trainingText.y = content.h/2-160;
 		content.addChild(trainingText);
 		
 		var trainingIconBG =  new zim.Rectangle(200, 200, "#ED406E");
-		trainingIconBG.x = trainingText.x/2+50;
-		trainingIconBG.y = trainingText.y+120;
+		trainingIconBG.x = content.w/2-100;
+		trainingIconBG.y = content.h/2-20;
 		content.addChildAt(trainingIconBG, 0);
 		var trainingIcon = new createjs.Bitmap(preload.getResult("swords"));
 		trainingIcon.scaleX = trainingIcon.scaleY = 0.4;
-		//trainingIcon.x = trainingText.x/2+50;
-		//trainingIcon.y = trainingText.y+120;
 		trainingIcon.x = trainingIconBG.x+10;
 		trainingIcon.y = trainingIconBG.y;
 		content.addChild(trainingIcon);
