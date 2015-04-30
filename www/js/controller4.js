@@ -6,7 +6,9 @@ var app = function(app) {
 		
 		var buttons = new zim.HotSpots([
 				{page: assets.home, rect: assets.start, call: function() {pages.go(assets.main, "right");}},
-				{page: assets.main, rect: assets.training, call: function() {pages.go(assets.explore, "right"); train();}}
+				{page: assets.main, rect: assets.training, call: function() {pages.go(assets.explore, "right"); train();}},
+				{page: assets.main, rect: assets.food, call: giveFood},
+				{page: assets.main, rect: assets.water, call: giveWater}
 			]
 		);
 		
@@ -49,13 +51,39 @@ var app = function(app) {
 			}
 			
 			delay.handler = function() {
-			
 				pages.go(assets.main, "left");
 				assets.trainingText.text = "TRAINING\nIN PROGRESS";
 				assets.showHeart();
 				delay.stop();
 				stage.update();
 			}
+		}
+		
+		function giveFood() {
+			zog("give food to faye");
+			assets.showHeart();
+			window.localStorage.food = Number(window.localStorage.food) + 2000;
+			window.localStorage.hp = Number(window.localStorage.hp) + 2000;
+			window.localStorage.friendliness = Number(window.localStorage.friendliness) + 1;
+			stage.update();
+		}
+		
+		function giveWater() {
+			zog("give water to faye");
+			assets.showHeart();
+			window.localStorage.water = Number(window.localStorage.water) + 2000;
+			window.localStorage.hp = Number(window.localStorage.hp) + 2000;
+			window.localStorage.friendliness = Number(window.localStorage.friendliness) + 1;
+			stage.update();
+		}
+	
+		assets.showHeart = function() {
+			createjs.Tween.get(assets.heart)
+				.to({alpha: 1}, 400)
+				.wait(400)
+				.to({alpha: 0}, 400);
+				
+			assets.hitCheck = false;
 		}
 	}
 	

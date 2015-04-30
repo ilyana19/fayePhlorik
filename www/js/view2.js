@@ -88,11 +88,13 @@ var app = function(app) {
 		foodBG.y = buttonBox.h/2-510;
 		buttonBox.addChildAt(foodBG, 0);
 		var food = p.food = new createjs.Bitmap(preload.getResult("food"));
-		food.startX = food.x = foodBG.x+100;
-		food.startY = food.y = foodBG.y+80;
-		//food.regX = w/2;
-		//food.regY = h/2;
-		//food.scaleX = food.scaleY = 2.8;
+		//food.startX = food.x = foodBG.x+1150;
+		//food.startY = food.y = foodBG.y+1180;
+		food.x = foodBG.x+1150;
+		food.y = foodBG.y+1180;
+		food.scaleX = food.scaleY = 2.8;
+		food.regX = w/2;
+		food.regY = h/2;
 		food.name = "food";
 		buttonBox.buttons.addChild(food);
 		
@@ -102,11 +104,13 @@ var app = function(app) {
 		buttonBox.addChildAt(waterBG, 0);
 		var water = p.water = new createjs.Bitmap(preload.getResult("wine"));
 		water.setBounds(0, 0, w, h);
-		water.startX = water.x = waterBG.x+90;
-		water.startY = water.y = waterBG.y+80;
-		//water.regX = w/2;
-		//water.regY = h/2;
-		//water.scaleX = water.scaleY = 2.8;
+		//water.startX = water.x = waterBG.x+1120;
+		//water.startY = water.y = waterBG.y+1180;
+		water.x = waterBG.x+1120;
+		water.y = waterBG.y+1180;
+		water.scaleX = water.scaleY = 2.8;
+		water.regX = w/2;
+		water.regY = h/2;
 		water.name = "water";
 		buttonBox.buttons.addChild(water);
 		
